@@ -1,0 +1,244 @@
+﻿{
+ "id": "9a8b6526-2c5f-11ee-b353-1e80c00a0a55",
+ "name": "InsetTitle",
+ "characters": [
+  {
+   "id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+   "name": "염시우",
+   "display_name": "염시우",
+   "status_message": "",
+   "profile_image": null,
+   "is_pov": false
+  },
+  {
+   "id": "9a8b5e8c-2c5f-11ee-b353-1e80c00a0a55",
+   "name": "한소라",
+   "display_name": "한소라",
+   "status_message": "",
+   "profile_image": null,
+   "is_pov": false
+  }
+ ],
+ "view_type": "CHAT",
+ "scenes": [
+  {
+   "id": "9a8b6012-2c5f-11ee-b353-1e80c00a0a55",
+   "name": "1",
+   "sender_ids": "0",
+   "items": [
+    {
+     "id": "9a8b5a04-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "effect",
+     "object": {
+      "name": "CLEAR_CHATS"
+     }
+    },
+    {
+     "id": "9a8b5c70-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "오늘은 염시우의 컴백 마지막 활동이 끝나는 날이다. 그동안 바빠서 잘 보지 못했던 여자친구를 오랜만에 보게 돼서 염시우는 아침부터 들떠 있었다."
+     }
+    },
+    {
+     "id": "9a8b5d10-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "염시우는 두근두근한 마음을 애써 억누른 채 한소라에게 메시지를 보낸다."
+     }
+    },
+    {
+     "id": "9a8b5dec-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 소라야! 나 이제 활동 다 끝났는데 우리 어디서 볼까?"
+     }
+    },
+    {
+     "id": "9a8b5e3c-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "염시우는 그동안의 피로가 다 풀린다는 듯이 웃으며 여자친구인 소라를 부른다."
+     }
+    },
+    {
+     "id": "9a8b5edc-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5e8c-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 음... 글쎄? 그냥 집데이트 하자 ㅋㅋㅋㅋㅋ"
+     }
+    },
+    {
+     "id": "9a8b5f22-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "한소라는 설레는 맘으로 답장을 기다린다."
+     }
+    },
+    {
+     "id": "9a8b5f86-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 그래! 그럼 내가 너네 집으로 갈게 ᄒᄒ 좀 이따 봐~^^"
+     }
+    },
+    {
+     "id": "9a8b5fcc-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "드디어 그토록 보고 싶었던 여자친구를 만날 생각에 염시우는 웃음이 끊이질 않는다."
+     }
+    }
+   ]
+  },
+  {
+   "id": "9a8b6288-2c5f-11ee-b353-1e80c00a0a55",
+   "name": "1",
+   "sender_ids": "0",
+   "items": [
+    {
+     "id": "9a8b5a04-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "effect",
+     "object": {
+      "name": "CLEAR_CHATS"
+     }
+    },
+    {
+     "id": "9a8b6062-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "오후 3시, 염시우는 스케줄을 끝내고 차를 타고 한소라의 집으로 향한다. 오늘따라 유독 날씨가 맑아서 그런지 하늘이 더욱 예뻐 보인다."
+     }
+    },
+    {
+     "id": "9a8b60bc-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5e8c-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 오 일찍 왔네 ㅋㅋㅋㅋㅋ 그럴 줄 알고 미리 파스타 해놨어 ㅋㅋㅋ"
+     }
+    },
+    {
+     "id": "9a8b6116-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 헐 진짜? 완전 맛있겠다!! 빨리 가자 ᄏᄏ"
+     }
+    },
+    {
+     "id": "9a8b615c-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "집에 도착하자 맛있는 냄새가 난다. 소라는 음식을 들고 식탁 위에 올려놓는다."
+     }
+    },
+    {
+     "id": "9a8b61ac-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5e8c-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 맛이 어때?"
+     }
+    },
+    {
+     "id": "9a8b61fc-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 와 대박.. 엄청 맛있어 ᅲᅲ 역시 요리왕 한소라👍👍"
+     }
+    },
+    {
+     "id": "9a8b624c-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "염시우는 연신 감탄하며 음식을 맛있게 먹어치웠다. 그 어떤 미슐랭 3성의 음식점들보다도 염시우에게는 여자친구인 소라의 요리만큼 맛있는 것은 없었다."
+     }
+    }
+   ]
+  },
+  {
+   "id": "9a8b64ea-2c5f-11ee-b353-1e80c00a0a55",
+   "name": "1",
+   "sender_ids": "0",
+   "items": [
+    {
+     "id": "9a8b5a04-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "effect",
+     "object": {
+      "name": "CLEAR_CHATS"
+     }
+    },
+    {
+     "id": "9a8b62d8-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5e8c-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 그래??? 그럼 이 청산가리도 먹어"
+     }
+    },
+    {
+     "id": "9a8b6328-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 뭐라고? 아니 갑자기 청산가리는 왜 "
+     }
+    },
+    {
+     "id": "9a8b6378-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5e8c-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 사실 넌 이미 먹었"
+     }
+    },
+    {
+     "id": "9a8b63c8-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 응? 그게 무슨 소리야"
+     }
+    },
+    {
+     "id": "9a8b6418-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5e8c-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 너가 15분 뒤에 죽을 거라고"
+     }
+    },
+    {
+     "id": "9a8b6468-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "9a8b5d6a-2c5f-11ee-b353-1e80c00a0a55",
+     "object_type": "text",
+     "object": {
+      "text": " 어어 잠깐만 지금 몇 시지? 헉 벌써 그렇게 됐어? 안되는데 아직 할 일이 많은데ᅲᅲᅲᅲᅲ 아 안돼 ᄅᄋᄃᄂᄀ쇼ᅧᅣᅢᅦᄏᄐᄎ퓨ᅮ"
+     }
+    },
+    {
+     "id": "9a8b64ae-2c5f-11ee-b353-1e80c00a0a55",
+     "character_id": "0",
+     "object_type": "text",
+     "object": {
+      "text": "그렇게 염시우는 세상을 떠났다."
+     }
+    }
+   ]
+  }
+ ],
+ "extra": {}
+}

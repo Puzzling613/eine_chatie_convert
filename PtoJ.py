@@ -1,15 +1,5 @@
-# prompt.txt와 ChatInfo.json 필요
 import json
 import uuid
-
-"""
-class UUIDEncoder(json.JSONEncoder): 
-    def default(self, obj):
-        if isinstance(obj, uuid.UUID):
-            # if the obj is uuid, we simply return the value of uuid
-            return obj.hex
-        return json.JSONEncoder.default(self, obj)
-"""
 
 
 class Character:
@@ -108,54 +98,42 @@ class Options:
 
     def image(self, image):
         rdict = {"color": self.color, "display_name_color": self.display_name_color, "image": image,
-                "bubble_color": self.bubble_color, "text_color": self.text_color}
+                 "bubble_color": self.bubble_color, "text_color": self.text_color}
         return {key: value for key, value in rdict.items() if value is not None}
 
-    # prompt to chatie
+
+# prompt to chatie
 
 
-def ctoj(prompt, chatinfo):  # prompt = "prompt.txt", chatinfo = "ChatInfo.json"
-    with open(chatinfo, "r", encoding='utf-8-sig') as info:
-        info_dict = json.load(info)
-    name = info_dict.get("title")  # 제목
+def ctoj(p):  # p는 str
+    line = None
+    teller = None
     characters = []  # 캐릭터
-    for character in info_dict.get("characters"):
-        if character.get("name") == "전지적":
-            characters.append(
-                Character(str(0), character.get("name"), character.get("display_name"), character.get("profile_image"),
-                          "").general())
-        else:
-            characters.append(Character(str(uuid.uuid1()), character.get("name"), character.get("display_name"),
-                                        character.get("profile_image"), "").char())
-
+    character_names = []
     scenes = []
     view_type = "CHAT"
     extra = {}
     items = []
     clearchat = ChatItem(str(uuid.uuid1()), None, Object("CLEAR_CHATS").init()).effect()  # clearchat 아이템
     items.append(clearchat)
-    p = open(prompt, "r")
-    line = None
-    teller = None
-    line = p.readline()
-    while line != "":
+
+    linelist = p.split("\n")
+    for line in linelist:
+        split_line = line.split(": ")
+        if len(split_line) > 1 and split_line[0] not in character_names:
+            character_names.append(split_line[0])
+            characters.append(Character(str(uuid.uuid1()), split_line[0], split_line[0], None, "").char())
         if line[0] == "=":  # line != "" and
-            sender_ids = []
-            sender_name = info_dict.get("scenes")["sender"]
-            # print("출력:",sender_name) #여기부터 다시
-            for character in characters:
-                if character["name"] in sender_name: sender_ids.append(character["id"])
-            scene = Scene(str(uuid.uuid1()), "1", sender_ids, items).scene()
+            scene = Scene(str(uuid.uuid1()), "1", "0", items).scene()
             scenes.append(scene)
             items = [clearchat]
-            line = p.readline()
             continue
 
         if line[:1] == "*":
             teller = "전지적"
         else:
             for chara in characters:  # characters 안에 character 객체
-                if line[:len(chara["name"]) + 1] == chara["name"] + ":":  # 캐릭터 이름이 세글자가 아니라면
+                if line[:len(chara["name"]) + 1] == chara["name"] + ":":
                     teller = chara["name"]
                     teller_id = chara["id"]
 
@@ -175,14 +153,9 @@ def ctoj(prompt, chatinfo):  # prompt = "prompt.txt", chatinfo = "ChatInfo.json"
             else:
                 items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[0:len(line) - 1])).text())
 
-        line = p.readline()
-
-    chatie_dict = {"id": str(uuid.uuid1()), "name": name, "characters": characters, "view_type": view_type,
+    chatie_dict = {"id": str(uuid.uuid1()), "name": "InsetTitle", "characters": characters, "view_type": view_type,
                    "scenes": scenes, "extra": extra}
-    p.close()
 
     # dict to json
-    with open("./uploads/chatie.json", "w", encoding='UTF-8-sig') as f:
-        f.write(json.dumps(chatie_dict, ensure_ascii=False, indent=True))  # cls=UUIDEncoder ->uuid json serialize 안 될 때
-
-# ctoj("./uploads/prompt.txt","./uploads/ChatInfo.json")
+    with open("chatie.json", "w", encoding='UTF-8-sig') as f:
+        f.write(json.dumps(chatie_dict, ensure_ascii=False, indent=True))
