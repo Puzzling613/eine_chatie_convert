@@ -24,14 +24,14 @@ class Character:
 
 
 class Scene:
-    def __init__(self, id, name, sender_ids, items):
+    def __init__(self, id, name, items, sender_ids):
         self.id = id
         self.name = name
-        self.sender_ids = sender_ids
         self.items = items
+        self.sender_ids = sender_ids
 
     def scene(self):
-        return {"id": self.id, "name": self.name, "sender_ids": self.sender_ids, "items": self.items}
+        return {"id": self.id, "name": self.name, "items": self.items, "sender_ids": self.sender_ids}
 
 
 class ChatItem:
@@ -123,7 +123,7 @@ def text2json(p):  # p는 str
             character_names.append(split_line[0])
             characters.append(Character(str(uuid.uuid1()), split_line[0], split_line[0], None, "").char())
         if line[0] == "=":  # line != "" and
-            scene = Scene(str(uuid.uuid1()), "1", "0", items).scene()
+            scene = Scene(str(uuid.uuid1()), "1", items, ["0"]).scene()
             scenes.append(scene)
             items = [clearchat]
             continue
@@ -163,18 +163,20 @@ def text2json(p):  # p는 str
 
 def json2text(messages): # message는 dictionary 가진 list
     characters = []
-    f = open("convesration.txt","w", encoding='UTF-8-sig')
+    f = open("conversation.txt",'w')
 
-    for message in messages:
+    for message in messages: # message는 dictionary
         teller = message["name"]
         if teller not in characters:
             characters.append(teller)
-        message_sentence = message.split("\n")
+        message_sentence = message["message"].split("\n")
         for sentence in message_sentence:
             if sentence == "":
                 continue
             elif sentence[0] == "*":
                 f.write(sentence)
             else:
-                f.write("%s: %s" %teller, sentence)
+                f.write("%s: %s" %(teller, sentence))
+            f.write("\n")
+    f.write("=")
     f.close()
