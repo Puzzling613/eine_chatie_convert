@@ -25,9 +25,10 @@ def home_page():
         file_name = f.filename
 
         if file_name[-4:] == "json":
-            message = f.json()
-            Converter.json2text(message)
-            return send_file("chatie.json", download_name="chatie.json", as_attachment=True)
+            messages = json.loads(f.read().decode('utf-8'))
+            #print(message[0]["message"])
+            Converter.json2text(messages)
+            return send_file("conversation.txt", download_name="conversation.txt", as_attachment=True)
         elif file_name[-3:] == "txt":
             text = f.read()
             text = text.decode('utf-8')
