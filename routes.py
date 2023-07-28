@@ -1,6 +1,6 @@
 import json
 import uuid
-from flask import Flask, render_template, request, send_file
+from flask import Flask, Response, render_template, request, send_file
 import os
 import pathlib
 from werkzeug.utils import secure_filename
@@ -26,13 +26,16 @@ def home_page():
 
         if file_name[-4:] == "json":
             messages = json.loads(f.read().decode('utf-8'))
-            Converter.json2text(messages)
-            return send_file("conversation.txt", download_name="conversation.txt", as_attachment=True)
+            conversation_file = Converter.json2text(messages)
+            return Response(conversation_file, content_type='text/plain', headers={'Content-Disposition': 'attachment; filename=conversation.txt'})
+            # return send_file("conversation.txt", download_name="conversation.txt", as_attachment=True)
         elif file_name[-3:] == "txt":
             text = f.read()
             text = text.decode('utf-8')
-            Converter.text2json(text)
-            return send_file("chatie.json", download_name="chatie.json", as_attachment=True)
+            chatie_file = Converter.text2json(text)
+            return Response(chatie_file, content_type='application/json', headers={'Content-Disposition': 'attachment; filename=chatie.json'})
+            # return send_file(chatie_file, download_name="chatie.json", as_attachment=True)→이러면 로컬에서 다운로드
+
         else:
             return render_template("page_not_found.html")
     return render_template('home.html')

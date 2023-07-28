@@ -1,6 +1,6 @@
 import json
 import uuid
-
+import io
 
 class Character:
     def __init__(self, id, name, display_name, profile_image, status_message):
@@ -156,15 +156,19 @@ def text2json(p):  # p는 str
                    "scenes": scenes, "extra": extra}
 
     # dict to json
-    with open("chatie.json", "w", encoding='UTF-8-sig') as f:
-        f.write(json.dumps(chatie_dict, ensure_ascii=False, indent=True))
+    in_memory_file = io.StringIO()
+    in_memory_file.write(json.dumps(chatie_dict, ensure_ascii=False, indent=True))
+    in_memory_file.seek(0)
+    return in_memory_file # .read()
+    # with open("chatie.json", "w", encoding='UTF-8-sig') as f:
+        # f.write(json.dumps(chatie_dict, ensure_ascii=False, indent=True))
 
 # message.json to text
 
 def json2text(messages): # message는 dictionary 가진 list
     characters = []
-    f = open("conversation.txt",'w')
-
+    #f = open("conversation.txt",'w')
+    text = ""
     for message in messages: # message는 dictionary
         teller = message["name"]
         if teller not in characters:
@@ -174,9 +178,17 @@ def json2text(messages): # message는 dictionary 가진 list
             if sentence == "":
                 continue
             elif sentence[0] == "*":
-                f.write(sentence)
+                text += sentence
+                # f.write(sentence)
             else:
-                f.write("%s: %s" %(teller, sentence))
-            f.write("\n")
-    f.write("=")
-    f.close()
+                text += teller+ ": " + sentence
+                #f .write("%s: %s" %(teller, sentence))
+            text += "\n"
+            # f.write("\n")
+    text += "="
+    #f.write("=")
+    in_memory_file = io.StringIO()
+    in_memory_file.write(text)
+    in_memory_file.seek(0)
+    return in_memory_file # .read()
+    # f.close()
