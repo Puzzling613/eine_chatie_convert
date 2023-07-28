@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, send_file
 import os
 import pathlib
 from werkzeug.utils import secure_filename
-import PtoJ
+import Converter
 
 app = Flask(__name__)
 
@@ -23,13 +23,18 @@ def home_page():
     if request.method == 'POST':
         f = request.files['file']
         file_name = f.filename
-        prompt = f.read()
-        prompt = prompt.decode('utf-8')
-        if file_name[-3:] != "txt":
-            return render_template('page_not_found.html')
-        else:
-            PtoJ.ctoj(prompt)
+
+        if file_name[-4:] == "json":
+            message = f.json()
+            Converter.json2text(message)
             return send_file("chatie.json", download_name="chatie.json", as_attachment=True)
+        elif file_name[-3:] == "txt":
+            text = f.read()
+            text = text.decode('utf-8')
+            Converter.text2json(text)
+            return send_file("chatie.json", download_name="chatie.json", as_attachment=True)
+        else:
+            return render_template("page_not_found.html")
     return render_template('home.html')
 
 
