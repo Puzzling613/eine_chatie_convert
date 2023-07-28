@@ -122,7 +122,7 @@ def text2json(p):  # p는 str
         if len(split_line) > 1 and split_line[0] not in character_names:
             character_names.append(split_line[0])
             characters.append(Character(str(uuid.uuid1()), split_line[0], split_line[0], None, "").char())
-        if line[0] == "=":  # line != "" and
+        if line[0] == "=":
             scene = Scene(str(uuid.uuid1()), "1", items, ["0"]).scene()
             scenes.append(scene)
             items = [clearchat]
@@ -147,10 +147,16 @@ def text2json(p):  # p는 str
                 items.append(ChatItem(str(uuid.uuid1()), "0", Object(None).text(line[0:len(line) - 1])).text())
         else:
             if line[0:len(teller)] == teller:
-                items.append(ChatItem(str(uuid.uuid1()), teller_id,
-                                      Object(None).text(line[len(teller) + 1:len(line) - 1])).text())
+                if line[-1] == "." and line[-2] != ".": # 마침표
+                    items.append(ChatItem(str(uuid.uuid1()), teller_id,
+                                        Object(None).text(line[len(teller) + 1:len(line) - 1 ])).text())
+                else:
+                    items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[len(teller) + 1:len(line)])).text())
             else:
-                items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[0:len(line) - 1])).text())
+                if line[-1] == "." and line[-2] != ".": # 마침표
+                    items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[0:len(line) - 1])).text())
+                else:
+                    items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[0:len(line)])).text())
 
     chatie_dict = {"id": str(uuid.uuid1()), "name": "InsetTitle", "characters": characters, "view_type": view_type,
                    "scenes": scenes, "extra": extra}
@@ -160,14 +166,12 @@ def text2json(p):  # p는 str
     in_memory_file.write(json.dumps(chatie_dict, ensure_ascii=False, indent=True))
     in_memory_file.seek(0)
     return in_memory_file # .read()
-    # with open("chatie.json", "w", encoding='UTF-8-sig') as f:
-        # f.write(json.dumps(chatie_dict, ensure_ascii=False, indent=True))
+
 
 # message.json to text
 
 def json2text(messages): # message는 dictionary 가진 list
     characters = []
-    #f = open("conversation.txt",'w')
     text = ""
     for message in messages: # message는 dictionary
         teller = message["name"]
@@ -179,16 +183,11 @@ def json2text(messages): # message는 dictionary 가진 list
                 continue
             elif sentence[0] == "*":
                 text += sentence
-                # f.write(sentence)
             else:
                 text += teller+ ": " + sentence
-                #f .write("%s: %s" %(teller, sentence))
             text += "\n"
-            # f.write("\n")
     text += "="
-    #f.write("=")
     in_memory_file = io.StringIO()
     in_memory_file.write(text)
     in_memory_file.seek(0)
-    return in_memory_file # .read()
-    # f.close()
+    return in_memory_file

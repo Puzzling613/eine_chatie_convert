@@ -28,13 +28,11 @@ def home_page():
             messages = json.loads(f.read().decode('utf-8'))
             conversation_file = Converter.json2text(messages)
             return Response(conversation_file, content_type='text/plain', headers={'Content-Disposition': 'attachment; filename=conversation.txt'})
-            # return send_file("conversation.txt", download_name="conversation.txt", as_attachment=True)
         elif file_name[-3:] == "txt":
             text = f.read()
             text = text.decode('utf-8')
             chatie_file = Converter.text2json(text)
             return Response(chatie_file, content_type='application/json', headers={'Content-Disposition': 'attachment; filename=chatie.json'})
-            # return send_file(chatie_file, download_name="chatie.json", as_attachment=True)→이러면 로컬에서 다운로드
 
         else:
             return render_template("page_not_found.html")
