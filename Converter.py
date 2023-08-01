@@ -193,6 +193,7 @@ def json2text(messages): # message는 dictionary 가진 list
             # characters.append(teller)
         for sentence in enter_sentence:
             sentence = sentence.replace('\"*','\"').replace('*\"','\"')
+            conv_or_action = 0 # 0이면 conv, 1이면 action
             while sentence != "":
                 if sentence != "" and sentence[0] == " ": sentence = sentence[1:] # 첫 공백 제거
 
@@ -200,33 +201,48 @@ def json2text(messages): # message는 dictionary 가진 list
                     text += action_finder.match(sentence).group()
                     text += "\n"
                     sentence = re.sub(action_finder,"",sentence)
+                    conv_or_action = 0
                     continue
                 elif conversation_finder.match(sentence) is not None: # 대사
                     text += teller + ": " + conversation_finder.match(sentence).group()[1:-1]
                     text += "\n"
                     sentence = re.sub(conversation_finder,"",sentence)
+                    conv_or_action = 1
                     continue
                 else: # 안 감싸진 것
                     if teller == user_teller:
                         if before_action_finder.match(sentence) is not None: # 뒤에 지문 있을 때
-                            print(before_action_finder.match(sentence).group())
-                            text += user_teller+ ": " + before_action_finder.match(sentence).group()
-                            text += "\n"
+                            text += user_teller+ ": " + before_action_finder.match(sentence).group() + "\n"
                             sentence = re.sub(before_action_finder,"",sentence)
+                            conv_or_action = 1
                             if before_action_finder.match(sentence).group() == "": #지문 처리(앞에만 *있을 경우)
                                 text += sentence + "\n"
+                                conv_or_action = 0
                                 break
                             else: continue
                         else:
                             text += user_teller + ": " + sentence + "\n"
+                            conv_or_action = 1
                             break
-                    else: # ai
+                    elif teller == ai_teller: # ai
                         if before_conv_finder.match(sentence) is not None: #뒤에 대사 있을 때 지문 처리
                             text += "*"+before_conv_finder.match(sentence).group()+"*" + "\n"
                             sentence = re.sub(before_conv_finder,"",sentence)
+                            conv_or_action = 0
                             continue
-                        else:
-                            text += "*"+ sentence + "*"+ "\n"
+                        elif before_action_finder.match(sentence) is not None: #뒤에 지문 있을 때 대사 처리
+                            text += ai_teller + ": " + before_action_finder.match(sentence).group() + "\n"
+                            sentence = re.sub(before_action_finder,"",sentence)
+                            conv_or_action = 1
+                            if before_action_finder.match(sentence).group() == "": #지문 처리(앞에만 *있을 경우)
+                                text += sentence + "\n"
+                                conv_or_action = 0
+                                break # 이거 flow 확인 안 함 ===========================
+                            else: continue
+                        else: # 마지막 안 감싸짐
+                            if conv_or_action == 0:
+                                text += teller + ": " + sentence + "\n"
+                            else: text += "*"+ sentence + "*"+ "\n" #기본적으로 지문 처리인데 앞에 뭐 나왔는지에 따라서 달라짐 ===========================
                             break
                     
     text += "="

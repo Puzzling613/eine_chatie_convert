@@ -34,7 +34,7 @@ def home_page():
         elif file_name[-3:] == "txt":
             text = f.read()
             text = text.decode('utf-8')
-            chatie_file = Converter.text2json(text,file_name[:-4])
+            chatie_file = Converter.text2json(text)
             return Response(chatie_file, content_type='application/json', headers={'Content-Disposition': 'attachment; filename='+file_name[:-4]+'.chatie'})
 
         else:
