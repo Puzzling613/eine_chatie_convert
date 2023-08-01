@@ -5,7 +5,8 @@ import os
 import pathlib
 from werkzeug.utils import secure_filename
 import Converter
-
+import os
+from dotenv import load_dotenv
 app = Flask(__name__)
 
 
@@ -32,7 +33,7 @@ def home_page():
             text = f.read()
             text = text.decode('utf-8')
             chatie_file = Converter.text2json(text)
-            return Response(chatie_file, content_type='application/json', headers={'Content-Disposition': 'attachment; filename=chatie.json'})
+            return Response(chatie_file, content_type='application/json', headers={'Content-Disposition': 'attachment; filename=chatie.chatie'})
 
         else:
             return render_template("page_not_found.html")
@@ -41,4 +42,8 @@ def home_page():
 
 if __name__ == '__main__':
     # 서버 실행
-    app.run(host='0.0.0.0', port=614, debug=True)
+    env = os.getenv('ENV','dev')
+    load_dotenv(f'env.{env}')
+    DEBUGORNOT= os.getenv("DEBUGORNOT")
+    app.run(host='0.0.0.0', port=8080, debug = DEBUGORNOT)
+    print("출력:",DEBUGORNOT)
