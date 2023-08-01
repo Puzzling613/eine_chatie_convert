@@ -7,6 +7,8 @@ from werkzeug.utils import secure_filename
 import Converter
 import os
 from dotenv import load_dotenv
+
+
 app = Flask(__name__)
 
 
@@ -43,7 +45,6 @@ def home_page():
 if __name__ == '__main__':
     # 서버 실행
     env = os.getenv('ENV','dev')
-    load_dotenv(f'env.{env}')
-    DEBUGORNOT= os.getenv("DEBUGORNOT")
-    app.run(host='0.0.0.0', port=8080, debug = DEBUGORNOT)
-    print("출력:",DEBUGORNOT)
+    load_dotenv(f'.env.{env}')
+    DEBUGORNOT= os.getenv('DEBUGORNOT')
+    app.run(host='0.0.0.0', port=8080, debug = int(DEBUGORNOT))
