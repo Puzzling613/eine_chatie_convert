@@ -184,7 +184,7 @@ def json2text(messages): # message는 dictionary 가진 list
     text = ""
     ai_teller = messages[0]["name"]
     user_teller = messages[1]["name"]
-    # characters = [ ai_teller, user_teller ]
+
 
     for message in messages: # message는 dictionary
         enter_sentence = message["message"].split("\n")

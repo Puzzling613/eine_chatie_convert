@@ -30,12 +30,12 @@ def home_page():
         if file_name[-4:] == "json":
             messages = json.loads(f.read().decode('utf-8'))
             conversation_file = Converter.json2text(messages)
-            return Response(conversation_file, content_type='text/plain', headers={'Content-Disposition': 'attachment; filename=conversation.txt'})
+            return Response(conversation_file, content_type='text/plain', headers={'Content-Disposition': 'attachment; filename='+file_name[:-5]+'.txt'})
         elif file_name[-3:] == "txt":
             text = f.read()
             text = text.decode('utf-8')
-            chatie_file = Converter.text2json(text)
-            return Response(chatie_file, content_type='application/json', headers={'Content-Disposition': 'attachment; filename=chatie.chatie'})
+            chatie_file = Converter.text2json(text,file_name[:-4])
+            return Response(chatie_file, content_type='application/json', headers={'Content-Disposition': 'attachment; filename='+file_name[:-4]+'.chatie'})
 
         else:
             return render_template("page_not_found.html")
