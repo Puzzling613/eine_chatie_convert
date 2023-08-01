@@ -1,6 +1,7 @@
 import json
 import uuid
 import io
+import re
 
 class Character:
     def __init__(self, id, name, display_name, profile_image, status_message):
@@ -116,17 +117,19 @@ def text2json(p):  # p는 str
     clearchat = ChatItem(str(uuid.uuid1()), None, Object("CLEAR_CHATS").init()).effect()  # clearchat 아이템
     items.append(clearchat)
 
-    linelist = p.split("\n")
+    linelist = p.split("\n") # 1차적으로 띄어쓰기 기준
     for line in linelist:
-        split_line = line.split(": ")
-        if len(split_line) > 1 and split_line[0] not in character_names:
-            character_names.append(split_line[0])
-            characters.append(Character(str(uuid.uuid1()), split_line[0], split_line[0], None, "").char())
+        # 장면 전환
         if line[0] == "=":
             scene = Scene(str(uuid.uuid1()), "1", items, ["0"]).scene()
             scenes.append(scene)
             items = [clearchat]
             continue
+        # 파싱
+        split_line = line.split(": ")
+        if len(split_line) > 1 and split_line[0] not in character_names: #캐릭터 추가
+            character_names.append(split_line[0])
+            characters.append(Character(str(uuid.uuid1()), split_line[0], split_line[0], None, "").char())
 
         if line[:1] == "*":
             teller = "전지적"
@@ -148,13 +151,16 @@ def text2json(p):  # p는 str
         else:
             if line[0:len(teller)] == teller:
                 if line[-1] == "." and line[-2] != ".": # 마침표
-                    items.append(ChatItem(str(uuid.uuid1()), teller_id,
-                                        Object(None).text(line[len(teller) + 1:len(line) - 1 ])).text())
+                    items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[len(teller) + 1:len(line) - 1 ])).text())
+                #elif line[-1] == "\"":
+                    #items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[len(teller) + 1:len(line) - 1 ])).text())
                 else:
                     items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[len(teller) + 1:len(line)])).text())
             else:
                 if line[-1] == "." and line[-2] != ".": # 마침표
                     items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[0:len(line) - 1])).text())
+                #elif line[-1] == "\"":
+                    #items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[0:len(line) - 1])).text())
                 else:
                     items.append(ChatItem(str(uuid.uuid1()), teller_id, Object(None).text(line[0:len(line)])).text())
 
@@ -171,21 +177,58 @@ def text2json(p):  # p는 str
 # message.json to text
 
 def json2text(messages): # message는 dictionary 가진 list
-    characters = []
+    conversation_finder = re.compile('^".*?"')
+    action_finder = re.compile('^\*.*?\*')
+    before_conv_finder = re.compile('^(.*?)\s*(?=")')
+    before_action_finder = re.compile('^(.*?)\s*(?=\*)')
     text = ""
+    ai_teller = messages[0]["name"]
+    user_teller = messages[1]["name"]
+    # characters = [ ai_teller, user_teller ]
+
     for message in messages: # message는 dictionary
+        enter_sentence = message["message"].split("\n")
         teller = message["name"]
-        if teller not in characters:
-            characters.append(teller)
-        message_sentence = message["message"].split("\n")
-        for sentence in message_sentence:
-            if sentence == "":
-                continue
-            elif sentence[0] == "*":
-                text += sentence
-            else:
-                text += teller+ ": " + sentence
-            text += "\n"
+        # if teller not in characters:
+            # characters.append(teller)
+        for sentence in enter_sentence:
+            sentence = sentence.replace('\"*','\"').replace('*\"','\"')
+            while sentence != "":
+                if sentence != "" and sentence[0] == " ": sentence = sentence[1:] # 첫 공백 제거
+
+                if action_finder.match(sentence) is not None: # 지문
+                    text += action_finder.match(sentence).group()
+                    text += "\n"
+                    sentence = re.sub(action_finder,"",sentence)
+                    continue
+                elif conversation_finder.match(sentence) is not None: # 대사
+                    text += teller + ": " + conversation_finder.match(sentence).group()[1:-1]
+                    text += "\n"
+                    sentence = re.sub(conversation_finder,"",sentence)
+                    continue
+                else: # 안 감싸진 것
+                    if teller == user_teller:
+                        if before_action_finder.match(sentence) is not None: # 뒤에 지문 있을 때
+                            print(before_action_finder.match(sentence).group())
+                            text += user_teller+ ": " + before_action_finder.match(sentence).group()
+                            text += "\n"
+                            sentence = re.sub(before_action_finder,"",sentence)
+                            if before_action_finder.match(sentence).group() == "": #지문 처리(앞에만 *있을 경우)
+                                text += sentence + "\n"
+                                break
+                            else: continue
+                        else:
+                            text += user_teller + ": " + sentence + "\n"
+                            break
+                    else: # ai
+                        if before_conv_finder.match(sentence) is not None: #뒤에 대사 있을 때 지문 처리
+                            text += "*"+before_conv_finder.match(sentence).group()+"*" + "\n"
+                            sentence = re.sub(before_conv_finder,"",sentence)
+                            continue
+                        else:
+                            text += "*"+ sentence + "*"+ "\n"
+                            break
+                    
     text += "="
     in_memory_file = io.StringIO()
     in_memory_file.write(text)
