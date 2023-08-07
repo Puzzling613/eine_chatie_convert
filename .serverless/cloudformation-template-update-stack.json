@@ -208,7 +208,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/chatie-converter/dev/1691394477451-2023-08-07T07:47:57.451Z/chatie-converter.zip"
+          "S3Key": "serverless/chatie-converter/dev/1691396321968-2023-08-07T08:18:41.968Z/chatie-converter.zip"
         },
         "Handler": "s_api.handler",
         "Runtime": "python3.9",
@@ -226,14 +226,14 @@
         "ApiLogGroup"
       ]
     },
-    "ApiLambdaVersionhM07RkkPZDXay7ZcBrDoymc2eeSNGMDKFcOdXY0W7c": {
+    "ApiLambdaVersion18rcgL7F6xpZ1FE4KreFQhUCWC1kWmAEvMk2LUkA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "MHgkNguLP5UK1IGaBt0JVMUmxujVKL2V0eMoOUoZ4jM="
+        "CodeSha256": "HfLuiwczPNl5BF+lXMwamtmBELZq7VlfZIoQolmFMGc="
       }
     },
     "HttpApi": {
@@ -391,7 +391,7 @@
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersionhM07RkkPZDXay7ZcBrDoymc2eeSNGMDKFcOdXY0W7c"
+        "Ref": "ApiLambdaVersion18rcgL7F6xpZ1FE4KreFQhUCWC1kWmAEvMk2LUkA"
       },
       "Export": {
         "Name": "sls-chatie-converter-dev-ApiLambdaFunctionQualifiedArn"
