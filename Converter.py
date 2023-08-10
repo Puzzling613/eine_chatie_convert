@@ -106,8 +106,10 @@ class Options:
 
 
 def enter(sentence): # sentence는 string
+    sentence = sentence.replace("... ","x!x")
     sentence = sentence.replace(". ",".")
     sentence = sentence.replace(".",".\n")
+    sentence = sentence.replace("x!x","...\n")
     sentence = sentence.strip()
     return sentence
 
